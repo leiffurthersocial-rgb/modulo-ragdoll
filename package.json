@@ -1,0 +1,33 @@
+{
+  "name": "modulo-ragdoll",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "e2e": "playwright test --trace off",
+    "assets:fetch": "tsx scripts/fetch-assets.ts",
+    "assets:process": "tsx scripts/process-assets.ts",
+    "assets:placeholders": "tsx scripts/gen-placeholders.ts",
+    "assets": "npm run assets:fetch && npm run assets:process"
+  },
+  "dependencies": {
+    "@dimforge/rapier2d-compat": "^0.21.0",
+    "pixi.js": "^8.22.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.6",
+    "fflate": "^0.8.2",
+    "sharp": "^0.35.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "undici": "^7.30.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
+  }
+}

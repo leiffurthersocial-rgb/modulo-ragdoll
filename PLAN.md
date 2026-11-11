@@ -163,16 +163,15 @@ Download size: initial JS + WASM ≤ 2.5 MB gzipped (Rapier is about 1.4 MB of t
 - Viewport: `width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no`, layout with `100dvh` and `env(safe-area-inset-*)`, `touch-action: none` on the canvas, `gesturestart` prevented, pointer events throughout. Pinch zoom handled by the game.
 - Render-target sizes clamped so canvas width × height × pixel ratio stays below the iOS canvas area limit.
 
-## 6. Asset sourcing status (checked this session)
+## 6. Asset sourcing status
 
-The default sandbox blocked every asset host except Google Fonts' CSS/static hosts. As you asked, I created a personal cloud environment, **`modulo-ragdoll`**, that allows exactly these hosts, and this session now runs on it. All of them are reachable:
-kenney.nl, opengameart.org, itch.io (+ img.itch.zone), freesound.org, pixabay.com, fonts.google.com / googleapis / gstatic, polyhaven.com, api.polyhaven.com, dl.polyhaven.org, ambientcg.com, game-icons.net.
+The default sandbox blocked every asset host except Google Fonts' CSS/static hosts. A personal cloud environment, **`modulo-ragdoll`**, now allows exactly the hosts listed in SETUP.md, and all sources were fetched successfully in Phase 0 (288 licensed files from Poly Haven, ambientCG, OpenGameArt incl. Kenney's CC0 uploads, game-icons.net and Google Fonts).
 
-Remaining gaps:
-- **Freesound** needs an API token. I'll ask for it through the secure credential form, where the proxy injects `Authorization: Token …` so the key never appears in chat or the repo. Locally it's read from `FREESOUND_API_KEY`. Only HQ previews are used (full originals need OAuth). License filter: `license:("Creative Commons 0" OR "Attribution")`.
-- **Pixabay** needs `PIXABAY_API_KEY` as a URL query parameter, which the proxy can't inject. That source runs on your machine (command in SETUP.md) or gets skipped. Pixabay Content License items are recorded as "Pixabay License (attribution not required)".
-- **itch.io** has no asset API and most downloads go through a "name your price" page. The script only accepts a curated manifest of direct CC0 links, and anything else gets listed for you to download by hand.
-- **game-icons.net** is CC BY 3.0, so attribution is required and handled by the credits screen.
+Remaining gaps (no API keys for now, so these are skipped cleanly):
+- **Freesound**: optional. Needs `FREESOUND_API_KEY`, and uses CC0/Attribution HQ previews only.
+- **Pixabay**: optional. Needs `PIXABAY_API_KEY`, and its API serves images only. Pixabay audio would be a manual download.
+- **kenney.nl direct**: signed links issued only through the web page, so manual (D-012).
+- **itch.io**: no API, so manual entries only.
 
 ## 7. Risks and mitigations
 

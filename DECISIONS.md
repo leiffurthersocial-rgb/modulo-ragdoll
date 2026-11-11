@@ -27,3 +27,27 @@ Needed: distance-delayed thunder, voice limiting per tier, procedural synth SFX 
 
 **D-009 rapier2d-compat (WASM inlined) over the bundler build.**
 No WASM MIME or fetch path issues on Vercel or Safari. `vercel.json` still sets `application/wasm` for any future `.wasm`.
+
+**D-010 (Phase 0) Processed assets are committed; raw downloads are not.**
+`public/media/` (about 19 MB on disk for both tiers, ≤ 6 MB downloaded per browser), `src/generated/asset-manifest.json` and `assets/LICENSES.json` live in git, so Vercel builds need no network access to the asset sites and builds are reproducible. `.asset-cache/` (raw, about 120 MB) stays local.
+
+**D-011 License whitelist.**
+Accepted: CC0, CC-BY 3.0/4.0, OGA-BY 3.0, Pixabay Content License, and OFL for fonts only. CC-BY-SA is rejected too (not only NC/ND), so share-alike terms can't attach to the game. A unit test blocks shipping any file without a license record.
+
+**D-012 Kenney packs via OpenGameArt, never by scripting kenney.nl downloads.**
+kenney.nl only issues signed download links through its page. Calling that endpoint from a script would mean faking a browser session, so I don't. Kenney mirrors many CC0 packs on OGA (Particle Pack, Interface Sounds, Sci-fi Sounds are used). Packs found only on kenney.nl (e.g. Impact Sounds) are manual entries, and the 100-CC0-SFX packs by rubberduck cover impacts until then.
+
+**D-013 Two processed tiers, not five.**
+"high" serves Ultra/High/Medium, "low" serves Low/Battery Saver. The other preset differences are runtime settings (resolution, bloom, particle caps), not different files.
+
+**D-014 Content-hashed file names for /media.**
+Allows `immutable` caching on Vercel for game assets as well as Vite's hashed bundles.
+
+**D-015 Audio: Ogg Vorbis + AAC (.m4a).**
+Ogg Vorbis rather than Opus, because Vorbis-in-Ogg has wider support in older Safari. AAC is the fallback, chosen at runtime with `canPlayType`. Loudness: SFX -18 LUFS mono, music/ambience -16 LUFS stereo.
+
+**D-016 Particle sprites converted to white + alpha.**
+Kenney particles are white-on-black. Processing turns luminance into alpha, so the sprites work tinted with both additive and normal blending.
+
+**D-017 KTX2 is optional (needs the `basisu` CLI).**
+Without it the pipeline emits WebP only. For now the memory budget allows that: one 2048×1024 backdrop at a time is 8 MB of GPU memory. To revisit in Phase 3 if the iPad memory audit asks for it.
