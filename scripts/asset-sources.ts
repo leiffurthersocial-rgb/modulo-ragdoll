@@ -86,10 +86,10 @@ export const SOURCES: SourceEntry[] = [
     ] },
 
   // ------------------------------------------------------------ Fonts (Google Fonts, OFL)
-  { id: 'font_display', kind: 'googlefonts', family: 'Orbitron', weights: [500, 700, 900], metadataDir: 'orbitron',
-    usage: 'font', purpose: 'Logo, headings, chaos score' },
-  { id: 'font_ui', kind: 'googlefonts', family: 'Rajdhani', weights: [500, 600, 700], metadataDir: 'rajdhani',
-    usage: 'font', purpose: 'UI text' },
+  { id: 'font_ui', kind: 'googlefonts', family: 'Inter', weights: [400, 500, 600, 700], metadataDir: 'inter',
+    usage: 'font', purpose: 'All UI text (clean, non-decorative)' },
+  { id: 'font_mono', kind: 'googlefonts', family: 'JetBrains Mono', weights: [500], metadataDir: 'jetbrainsmono',
+    usage: 'font', purpose: 'Numbers: debug overlay, chaos score, damage numbers' },
 
   // ------------------------------------------------------------ Optional: need API keys (skipped without)
   { id: 'fs_thunder', kind: 'freesound', query: 'thunder clap close', take: 4, maxDuration: 8, usage: 'sfx',

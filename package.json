@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@dimforge/rapier2d-compat": "^0.21.0",
+    "pixi-filters": "^6.1.5",
     "pixi.js": "^8.22.0"
   },
   "devDependencies": {
