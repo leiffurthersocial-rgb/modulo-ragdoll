@@ -87,5 +87,23 @@ kenney.nl, www.kenney.nl, opengameart.org, itch.io, img.itch.zone, freesound.org
 Note: Chromium in the sandbox uses software WebGL (around 16 FPS), so frame-time numbers measured there don't represent real hardware. Use `/bench` on a real machine (Phase 3).
 
 ## Deploying to Vercel
-1. Import the GitHub repo in Vercel (framework preset "Vite" or "Other").
-2. `vercel.json` already sets the build command (`npm run build`), output (`dist`), immutable caching for `/assets/*` (hashed JS/CSS) and `/media/*` (content-hashed game assets), and `application/wasm` for `.wasm` files. Rapier's WASM is currently inlined in JS, so no `.wasm` file is served yet.
+
+Everything Vercel needs is in the repo: `vercel.json` (Vite preset, `npm ci`, `npm run build` → `dist/`, cache and WASM headers), the Node version (`22.x` in `package.json`), and the processed assets under `public/media/`. No environment variables or API keys are needed.
+
+**Option A: Git integration (recommended)**
+1. On vercel.com, choose Add New → Project, then import `leiffurthersocial-rgb/modulo-ragdoll`. Approve the Vercel GitHub app for the repo if asked.
+2. Leave every setting as detected (framework Vite; build, install and output settings come from `vercel.json`), then click Deploy.
+3. Every push then gets a preview URL. The production URL follows the production branch, which you can set under Project → Settings → Git.
+
+**Option B: CLI from your machine**
+```bash
+npm i -g vercel
+```
+```bash
+vercel
+```
+```bash
+vercel --prod
+```
+
+The build was checked with `vercel build` on a clean checkout: it type-checks, bundles, and the output boots without errors. Caching: `/assets/*` (hashed JS/CSS) and `/media/*` (content-hashed game assets) are immutable for a year, and `index.html` always revalidates, so new deploys show up immediately.
