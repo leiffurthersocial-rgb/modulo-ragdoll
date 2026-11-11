@@ -51,3 +51,30 @@ Kenney particles are white-on-black. Processing turns luminance into alpha, so t
 
 **D-017 KTX2 is optional (needs the `basisu` CLI).**
 Without it the pipeline emits WebP only. For now the memory budget allows that: one 2048×1024 backdrop at a time is 8 MB of GPU memory. To revisit in Phase 3 if the iPad memory audit asks for it.
+
+**D-018 Bloom via pixi-filters AdvancedBloom (supersedes D-006).**
+It runs on an untransformed `sceneLayer`, so `filterArea` is in screen space. Putting it on the camera-transformed container clipped the world. Quality per preset: resolution full/half/0.3 and blur passes 7/5/3, or off. Bloom spikes raise `bloomScale` briefly. Chromatic aberration is an RGBSplit filter attached to the stage only while a pulse is active, so it costs nothing otherwise.
+
+**D-019 Joint breaking from estimated joint load.**
+Rapier's JS API exposes neither joint impulses nor useful stretch (its joints are very stiff). Per step, the load on a joint is estimated as the distal part's momentum change, minus gravity, minus impulses we applied ourselves (powers, grab, statuses: all routed through `PhysicsWorld.applyImpulse/setVelocity/push`), minus contact impulse. Threshold: stopping the part from ~16 m/s in one step, scaled down as the parts get damaged. The load has to exceed the threshold for ~2 steps. Stretch is still a second trigger. Parts at 0 HP detach.
+
+**D-020 Passive dummies: they slump, they don't stand.**
+Force-based motors with heavy damping hold the mannequin shape while the body folds onto the ground in about a second, with no jitter or rebound. Stiffer motors made the dummy a rigid statue that toppled like a plank and took fall damage; softer ones made it "stand back up". Active balancing is out of scope for a crash-test dummy.
+
+**D-021 Impact damage from real velocity change.**
+Contact-force events only signal a collision. Damage uses the body's actual velocity change in that step, so standing or stacked bodies don't hurt themselves (the first version broke the dummies' feet while they stood still).
+
+**D-022 Flat UI (your feedback, supersedes the neon UI look).**
+Fonts changed from Orbitron/Rajdhani to Inter (UI) and JetBrains Mono (numbers). Icons are game-icons.net glyphs drawn as CSS masks in the text colour.
+
+**D-023 Power entities instead of physics for spirits.**
+Shadow clones, the spirit dragon, rifts and storm clouds are pure `PowerEntity` logic (positions + queries + impulses) drawn with FX. They need no extra Rapier bodies, so they're cheap and portable to 3D.
+
+**D-024 Effects capture for QA.**
+In the sandbox, headless Chromium renders in software at ~14 FPS and Playwright screenshots take several frames, so short-lived effects (bolts live 0.1–0.4 s) are often gone by the time a screenshot lands. Effect frames are captured in-page with `renderer.extract` right after a rendered frame (see the frames scripts referenced in SETUP.md).
+
+**D-025 Camera frames the area above the dock.**
+`bottomInset` is measured from the dock each HUD update, so the floor never sits behind the controls on any screen size.
+
+**D-026 Kill-cam.**
+On a neck break, or when a dummy drops below 12% health, the camera zooms partway in at 0.25× time for 1.1 s, then glides back to the previous view. 4 s cooldown. Toggle in Settings.

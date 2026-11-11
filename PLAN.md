@@ -4,6 +4,17 @@
 This document covers architecture, milestones, performance budgets, iPad limits and risks.
 Running design decisions live in `DECISIONS.md`. Environment and asset pipeline steps are in `SETUP.md` (written in Phase 0).
 
+## Status (2026-11-11)
+
+All three phases are built. You asked to finish the game in one go, so the phase review stops were skipped. Deviations from the plan below:
+
+- **UI is flat, not neon** (your feedback): neutral dark panels, Inter, one muted blue accent, no glows. The game world keeps its glow.
+- **Bloom** uses `pixi-filters` AdvancedBloom on a screen-space layer with per-preset resolution/quality, instead of hand-written shaders (D-018).
+- **Dummies slump** to the ground in about a second with force-based posture motors, keeping their mannequin shape. They don't stand: there's no active balancing (D-020).
+- **Joint breaking** uses an estimated joint load (D-019), not stretch alone.
+- **Mid-phase review stop** after Lightning was skipped at your request. Lightning was checked with in-page frame captures.
+- **Power count:** 22 powers, 74 sub-abilities. Archetypes have 2 sub-abilities each.
+
 ---
 
 ## 1. Stack (versions checked 2026-11-11)

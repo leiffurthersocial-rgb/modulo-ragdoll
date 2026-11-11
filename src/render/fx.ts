@@ -540,9 +540,10 @@ export class FxRenderer implements FXAPI {
       const f = Math.min(1, (bm.life / bm.max) * 2);
       const w = bm.width * PPM;
       const wob = 0.85 + Math.random() * 0.3;
-      ga.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: bm.color, width: w * 2.4 * wob, alpha: 0.18 * f, cap: 'round' });
-      ga.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: bm.color, width: w * 1.2 * wob, alpha: 0.5 * f, cap: 'round' });
-      ga.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: bm.core, width: w * 0.45, alpha: 0.95 * f, cap: 'round' });
+      ga.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: bm.color, width: w * 2 * wob, alpha: 0.12 * f, cap: 'round' });
+      ga.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: bm.color, width: w * 1.1 * wob, alpha: 0.35 * f, cap: 'round' });
+      ga.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: bm.color, width: w * 0.6, alpha: 0.6 * f, cap: 'round' });
+      ga.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: bm.core, width: w * 0.28, alpha: 0.95 * f, cap: 'round' });
     }
     this.beams = this.beams.filter((b) => (b.life -= dt) > 0);
 

@@ -453,9 +453,16 @@ export class Game {
     this.killCamCooldown = 4;
     this.slowMoScale = 0.25;
     this.slowMoTime = 1.1;
-    this.camTarget = { x: p.x, y: p.y, h: Math.max(5, this.cam.h * 0.6) };
+    // Zoom toward the action, then glide back to where the player was looking.
+    const back = { ...this.cam };
+    this.camTarget = { x: lerp(this.cam.x, p.x, 0.6), y: lerp(this.cam.y, p.y, 0.6), h: Math.max(5, this.cam.h * 0.65) };
     setTimeout(() => {
-      if (!this.settings.autoZoom) this.camTarget = null;
+      if (!this.settings.autoZoom) {
+        this.camTarget = back;
+        setTimeout(() => {
+          if (this.camTarget === back) this.camTarget = null;
+        }, 1500);
+      }
     }, 1100);
   }
 
@@ -830,13 +837,17 @@ export class Game {
     ];
     const times: number[] = [];
     const start = performance.now();
+    let last = start;
     let next = 0;
     this.runtime.infiniteEnergy = true;
     this.runtime.noCooldowns = true;
     return new Promise((resolve) => {
       const tick = () => {
         const t = (performance.now() - start) / 1000;
-        times.push(this.app.ticker.deltaMS);
+        // Wall-clock frame time (Pixi's deltaMS is capped at 100 ms, which hides slow frames).
+        const now = performance.now();
+        times.push(now - last);
+        last = now;
         if (next < seq.length && t > 0.8 + next * (seconds - 2) / seq.length) {
           const [pw, sub, a, b] = seq[next++]!;
           this.runtime.selectById(pw, sub);

@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: 'tests/e2e',
   outputDir: 'test-results',
-  timeout: 30_000,
+  timeout: 60_000,
   fullyParallel: false,
   reporter: [['list']],
   use: {
@@ -19,5 +19,6 @@ export default defineConfig({
   projects: [
     { name: 'desktop', use: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 } },
     { name: 'ipad', use: { ...devices['iPad Pro 11'], browserName: 'chromium' } },
+    { name: 'ipad-portrait', use: { ...devices['iPad (gen 7)'], browserName: 'chromium' } },
   ],
 });

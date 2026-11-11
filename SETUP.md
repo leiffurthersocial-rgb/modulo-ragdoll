@@ -17,7 +17,8 @@ npm install
 | `npm run build` | Type-check + production build into `dist/` |
 | `npm run preview` | Serve `dist/` on port 4173 |
 | `npm test` | Vitest unit tests |
-| `npm run e2e` | Playwright smoke test on desktop + iPad viewports. Screenshots go to `test-results/screens/` |
+| `npm run e2e` | Playwright smoke tests (fail on console errors) on desktop, iPad Pro 11 landscape and iPad portrait. Screenshots go to `test-results/screens/` |
+| `BENCH=1 npm run e2e -- --project=desktop bench` | Benchmark: 20 dummies + scripted power sequence per preset. avg/p95 frame times go to `test-results/bench.jsonl`. Also available in the browser at `/?bench&preset=high&dummies=20` |
 
 Playwright is pinned to 1.63 to match the Chromium build preinstalled in the cloud sandbox. On your own machine, run `npx playwright install chromium` once.
 

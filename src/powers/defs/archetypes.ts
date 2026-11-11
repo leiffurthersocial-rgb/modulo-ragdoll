@@ -33,7 +33,7 @@ export const spiritBeam: Power = {
       },
       onCast(ctx, i) {
         const c = Math.max(0.15, i.charge);
-        const width = 0.35 + c * 1.1;
+        const width = 0.22 + c * 0.6;
         const dur = 0.5 + c * 1.1;
         ctx.audio.play('beam', { pos: i.origin, volume: 0.6 + c * 0.4 });
         ctx.fx.flash(0xb8f4ff, 0.25 + c * 0.3);
@@ -174,7 +174,7 @@ function shadowClone(start: Vec2, life: number): PowerEntity {
       const head = add(pos, { x: 0, y: 0.75 });
       const hip = add(pos, { x: 0, y: -0.05 });
       const swing = Math.sin(t * 14) * 0.35;
-      const L = (a: Vec2, b: Vec2, w = 0.07) => c.fx.line(a, b, { color: col, width: w, life: dt * 1.6, alpha: 0.85 });
+      const L = (a: Vec2, b: Vec2, w = 0.07) => c.fx.line(a, b, { color: col, width: w, life: dt * 1.6, alpha: 0.5 });
       c.fx.zone(head, 0.16, { color: 0x1a0d33, life: dt * 1.6, alpha: 1 });
       c.fx.ring(head, { color: col, radius: 0.16, life: dt * 1.6, grow: false, width: 0.03 });
       L(add(head, { x: 0, y: -0.16 }), hip, 0.1);
